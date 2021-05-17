@@ -130,3 +130,6 @@ dmypy.json
 
 # db files
 store_perm
+
+# vscode hidden file
+.vscode/
