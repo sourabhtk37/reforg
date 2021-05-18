@@ -24,7 +24,8 @@ def get_key(key: str, response: Response):
 
 
 @app.put("/api/v1/keys")
-def put_key(key: str, value: str):
+def put_key(key: str, value: str, response:Response):
     """Update key:value pair"""
-    kv_store.put(key, value)
-    
+    ret_val = kv_store.put(key, value)
+    if ret_val == "-1":
+        response.status_code = 500

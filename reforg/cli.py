@@ -11,7 +11,7 @@ from http_client import get_key, put_key
 logging.config.fileConfig("logging.conf")
 logger = logging.getLogger(__name__)
 
-DEFAULT_API_URL = "http://127.0.0.1:8000/api/v1/keys"
+DEFAULT_API_URL = "http://127.0.0.1/api/v1/keys"
 WATCH_INTERVAL = 1
 
 
@@ -35,7 +35,7 @@ def args_handler(args):
 
     if args.watch:
         kv_dict = None
-        logging.info(
+        logger.info(
             f"Watching for changes by polling API endpoint at {args.interval} seconds interval"
         )
         print("Press Ctrl+c to interrupt watch")
@@ -49,7 +49,7 @@ def args_handler(args):
                 time.sleep(int(args.interval))
         except KeyboardInterrupt:
             print("Watch Interrupted!")
-            logging.info(f"Watch Stopped")
+            logger.info(f"Watch Stopped")
 
 
 def main():

@@ -1,8 +1,8 @@
 import requests
+
 import logging
 
 logger = logging.getLogger(__name__)
-
 
 def get_key(url, key: str) -> dict:
     """Retreive key from server
@@ -21,7 +21,7 @@ def get_key(url, key: str) -> dict:
             return resp_dict
     except Exception as err:
         logger.debug(err)
-        logging.error("Unable to process the request")
+        logger.error(f"Unable to process the request:{err}")
 
 
 def put_key(url, key: str, value: str) -> None:
@@ -37,4 +37,4 @@ def put_key(url, key: str, value: str) -> None:
         resp.raise_for_status()
     except Exception as err:
         logger.debug(err)
-        logging.error("Unable to process the request")
+        logger.error(f"Unable to process the request:{err}")

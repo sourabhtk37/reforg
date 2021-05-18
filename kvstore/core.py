@@ -50,18 +50,18 @@ class KvStore:
         """
         if key not in self.__cache:
             # Read from db
-            with dbm.open("store_perm", "c") as db:
+            with dbm.open("store_perm", "cs") as db:
                 if key in db:
                     self.__cache[key] = db[key]
                     self.__cache.move_to_end(key)
                     return str(self.__cache[key], encoding=ENCODING)
 
-            logging.error("Key or DB not found")
+            logger.error("Key or DB not found")
         else:
             self.__cache.move_to_end(key)
             return self.__cache[key]
 
-    def put(self, key: str, value: str) -> None:
+    def put(self, key: str, value: str) -> int:
         """
         On updates the key is saved to dbm and cache is updated
         and moved to the end. If capacity of LRU cache is exceeded then
@@ -72,11 +72,12 @@ class KvStore:
         :returns None:
         """
 
-        with dbm.open("store_perm", "c") as db:
+        with dbm.open("store_perm", "cs") as db:
             try:
                 db[key] = value
             except TypeError as err:
-                logging.error("Invalid type passed")
+                logger.error("Invalid type passed")
+                return -1
         self.__cache[key] = value
         self.__cache.move_to_end(key)
 
