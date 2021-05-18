@@ -2,6 +2,8 @@
 # Reforg
 
 A Key value store service with server and client(cli) programs
+
+
 ## Features
 - Http server for adding, updating and fetching key:value pair
 - LRU cache implementation for quick access to data
@@ -11,7 +13,6 @@ A Key value store service with server and client(cli) programs
 - Watch a particular key for changes
 
 
-  
 ## API Reference
 API docs and reference are also available via openAPI spec which can be access at: http://<server-ip>/docs
 
@@ -36,8 +37,6 @@ API docs and reference are also available via openAPI spec which can be access a
 | `value`    | `string` | **Required**. value to be updated corresponding to the key  |
 
 
-#
-
 # Deployment
 
 To deploy this project run
@@ -51,10 +50,9 @@ To deploy this project run
 Your application would be accessible from `127.0.0.1(localhost)` and NIC interface ip.
 
 
-  
 ## Installation 
 
-Install my-project with npm
+Install cli client requirements 
 
 ```bash
 cd reforg/
@@ -95,7 +93,7 @@ optional arguments:
 ├── server    # http API server
 │   ├── main.py
 └── tests
-├── requirements_reforg.txt  # requirements for the 
+├── requirements_reforg.txt  # requirements for the cli client
 ├── setup.py
 ├── LICENSE
 ├── logging.conf
@@ -104,13 +102,14 @@ optional arguments:
 
 8 directories, 18 files
 ```
+
 ## Issues/Optimizations
 
 - In case of deployment via gunicorn or similar servers that spins up multiple workers, 
-  multiple instances of the python objects could be created which cause data consistency 
+  multiple instances of the python objects could be created which cause data inconsistency 
   as each instance would have it's own copy of data. 
   To solve this:
   - Implement redis for storing the key:value store in memory therefore involving IPC between
     worker processes.
-  - Another similar alternative is to Implement `multiprocessing.connection` module in python.
+  - Another alternative is to Implement `multiprocessing.connection` module in python.
     Which also involves IPC.
